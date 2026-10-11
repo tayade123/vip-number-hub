@@ -17,7 +17,7 @@
 </div></div><div id="toast" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:white;color:#111;padding:11px 15px;border-radius:12px;font-weight:800;z-index:50"></div>
 
 <script>
-const CONFIG={SUPABASE_URL:"https://supabase.com/dashboard/project/tkethohdttyovopxjliq",SUPABASE_KEY:"sb_publishable_DHXz-jQEw8DzMOeVc_YruA_pw16iy4m"};
+const CONFIG={SUPABASE_URL:"tkethohdttyovopxjliq",SUPABASE_KEY:"sb_publishable_DHXz-jQEw8DzMOeVc_YruA_pw16iy4m"};
 let db=null,items=[],taps=0,timer=null;
 function root(n){let s=[...String(n||"").replace(/\D/g,"")].reduce((a,d)=>a+Number(d),0);while(s>9)s=[...String(s)].reduce((a,d)=>a+Number(d),0);return s||null}
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
