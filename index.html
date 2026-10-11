@@ -1,43 +1,331 @@
 <!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VIP Number Hub</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f7fc">
+<title>VIP Number Hub | Premium Fancy Numbers</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#070b14;color:#f5f7fb;font-family:system-ui,Arial,sans-serif}.header{position:sticky;top:0;z-index:5;background:#070b14ee;border-bottom:1px solid #263149}.nav{max-width:1180px;margin:auto;padding:15px 18px;display:flex;justify-content:space-between;align-items:center}.brand{display:flex;align-items:center;gap:10px;font-weight:800}.mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:#ffd76a;color:#111;font-size:21px;cursor:pointer}.hero,.toolbar,.grid{max-width:1180px;margin:auto;padding-left:18px;padding-right:18px}.hero{padding-top:52px;padding-bottom:25px}.hero h1{font-size:clamp(34px,6vw,64px);line-height:1;margin:0 0 14px}.hero span{color:#ffd76a}.hero p{color:#aab3c7;line-height:1.6;max-width:700px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;padding-bottom:22px}.toolbar input,.toolbar select,.modal input{background:#0e1524;color:white;border:1px solid #2b3852;border-radius:12px;padding:12px}.toolbar input{flex:1;min-width:210px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;padding-bottom:50px}.card{background:linear-gradient(180deg,#121a29,#0b101b);border:1px solid #2a3650;border-radius:20px;padding:18px}.num{font-size:26px;font-weight:900;letter-spacing:1px}.price{color:#ffd76a;font-weight:800;font-size:18px;margin-top:8px}.meta{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:#aab3c7;font-size:13px}.total{background:#1b2639;border:1px solid #394761;border-radius:999px;padding:7px 10px;color:white;font-weight:800}.actions{display:flex;gap:8px;margin-top:15px}.btn{border:0;border-radius:11px;padding:11px 14px;font-weight:800;cursor:pointer}.wa{background:#25d366;color:#06140a;flex:1}.copy{background:#182337;color:#fff}.empty{text-align:center;grid-column:1/-1;color:#9aa6ba;padding:60px 10px}.overlay{display:none;position:fixed;inset:0;background:#000a;z-index:20;align-items:center;justify-content:center;padding:18px}.modal{width:min(470px,100%);background:#0e1524;border:1px solid #2d3a55;border-radius:20px;padding:22px}.modal input{width:100%;margin:7px 0}.primary{background:#ffd76a;color:#111;width:100%;margin-top:8px}.close{float:right;background:none;border:0;color:#9aa6ba;font-size:22px}.adminlist{margin-top:16px;display:grid;gap:8px}.row{display:flex;justify-content:space-between;align-items:center;background:#131e30;border:1px solid #2a3852;border-radius:12px;padding:10px;gap:10px}.danger{background:#ff596b;color:white}@media(max-width:600px){.hero{padding-top:38px}.num{font-size:23px}}
-</style></head><body>
-<header class="header"><div class="nav"><div class="brand"><div class="mark" id="secret">✦</div>VIP Number Hub</div><small>Premium • Fancy • Numerology</small></div></header>
-<section class="hero"><h1>Find Your <span>Perfect VIP Number</span></h1><p>Premium mobile numbers with price, pattern and automatic numerology total.</p></section>
-<div class="toolbar"><input id="search" placeholder="Search number, pattern or category"><select id="cat"><option value="">All categories</option><option>VIP</option><option>Fancy</option><option>Premium</option><option>Numerology</option></select><select id="sort"><option value="new">Newest</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select></div>
-<main id="grid" class="grid"></main>
+:root{color-scheme:light;--page:#f5f7fc;--surface:#fff;--ink:#172033;--muted:#65718a;--line:#e0e6f0;--gold:#bd8b16;--gold-border:#e5c66d;--gold-light:#fff3cb;--green:#168447;--shadow:0 12px 32px rgba(30,43,69,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 0%,#fff9e8 0%,transparent 42%),var(--page);color:var(--ink);font-family:Inter,system-ui,Arial,sans-serif}
+button,input,select{font:inherit}
+.header{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:auto;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.3px}
+.mark{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#ffe8a0,#d7a72f);color:#382808;font-size:23px;cursor:pointer;box-shadow:0 5px 12px #bd8b1625;user-select:none}
+.nav small{color:var(--muted);font-weight:600}
+.hero,.toolbar,.grid{max-width:1180px;margin:auto;padding-left:18px;padding-right:18px}
+.hero{padding-top:58px;padding-bottom:28px}
+.hero h1{font-size:clamp(35px,6vw,66px);letter-spacing:-1.8px;line-height:1.04;margin:0 0 16px;font-weight:900}
+.hero span{background:linear-gradient(90deg,#a87508,#d3a22b,#9a6d08);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);line-height:1.7;max-width:700px;font-size:16px;margin:0}
+.toolbar{display:flex;gap:11px;flex-wrap:wrap;padding-bottom:24px}
+.toolbar input,.toolbar select,.modal input{background:#fff;color:var(--ink);border:1px solid #d8dfeb;border-radius:13px;padding:13px 14px;outline:none;box-shadow:0 2px 6px #1c2b4505}
+.toolbar input:focus,.toolbar select:focus,.modal input:focus{border-color:#c69b31;box-shadow:0 0 0 3px #e8c75a30}
+.toolbar input{flex:1;min-width:220px}
+.toolbar select{cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;padding-bottom:56px}
+.card{position:relative;overflow:hidden;background:linear-gradient(145deg,#fff,#fffdf7);border:1px solid #e6dfcc;border-radius:22px;padding:21px;box-shadow:var(--shadow);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.card:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#f4d77e,#bc8b19,#f7e8b4)}
+.card:hover{transform:translateY(-4px);border-color:#d8bd6c;box-shadow:0 17px 38px rgba(108,82,22,.12)}
+.num{font-size:clamp(25px,3vw,31px);font-weight:900;letter-spacing:1.1px;color:#172033;overflow-wrap:anywhere}
+.price{color:#956900;font-weight:900;font-size:25px;margin-top:9px}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;color:var(--muted);font-size:13px}
+.category-tag{background:#f0f3f9;color:#4e5b73;border:1px solid #e0e6f0;padding:7px 10px;border-radius:999px;font-weight:800}
+.total{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:linear-gradient(135deg,#fff4d0,#ffedb1);border:1px solid var(--gold-border);border-radius:14px;padding:10px 14px;color:#785408;font-weight:900}
+.card .total{min-height:54px;font-size:18px;padding:11px 15px;box-shadow:0 4px 12px #bd8b1610}
+.card .total strong{font-size:27px;line-height:1;color:#7e5700}
+.pattern-note{color:#65718a;margin-top:13px;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.actions{display:flex;gap:9px;margin-top:17px}
+.btn{border:0;border-radius:12px;padding:12px 15px;font-weight:850;cursor:pointer;transition:transform .15s ease,filter .15s ease}
+.btn:hover{filter:brightness(.98);transform:translateY(-1px)}
+.wa{background:#20bd65;color:#fff;flex:1;box-shadow:0 5px 12px #20bd6525}
+.copy{background:#edf1f8;color:#26334b;border:1px solid #dce3ef}
+.empty{text-align:center;grid-column:1/-1;color:var(--muted);padding:64px 15px;background:#ffffffb8;border:1px dashed #d3dbea;border-radius:20px;line-height:1.8}
+.overlay{display:none;position:fixed;inset:0;background:rgba(19,28,45,.48);backdrop-filter:blur(5px);z-index:20;align-items:center;justify-content:center;padding:18px}
+.modal{width:min(470px,100%);max-height:90vh;overflow:auto;background:#fff;border:1px solid #e1e6ef;border-radius:22px;padding:23px;box-shadow:0 24px 70px #15213a30}
+.modal h2{margin:2px 0 14px;color:#172033}
+.modal p{color:var(--muted);line-height:1.5}
+.modal input{width:100%;margin:7px 0}
+.primary{background:linear-gradient(135deg,#ffe69a,#e7bd4e);color:#382808;width:100%;margin-top:9px;box-shadow:0 5px 14px #bd8b1620}
+.close{float:right;background:#f1f4f9;border:0;border-radius:9px;color:#5c6780;font-size:22px;width:34px;height:34px;cursor:pointer}
+.adminlist{margin-top:16px;display:grid;gap:9px}
+.row{display:flex;justify-content:space-between;align-items:center;background:#f8faff;border:1px solid #e1e7f1;border-radius:13px;padding:11px;gap:10px;color:#172033}
+.row small{color:var(--muted)}
+.danger{background:#ffe8eb;color:#b42336;border:1px solid #ffcbd2}
+#toast{box-shadow:0 8px 28px #15213a20}
+.admin-total{display:inline-flex;align-items:center;gap:10px;background:#fff3cb;border:1px solid #e5c66d;border-radius:14px;padding:12px 15px;color:#765300;font-weight:850;margin:6px 0 8px}
+.admin-total strong{font-size:27px;color:#765000}
+@media(max-width:600px){.nav{padding:12px 14px}.nav small{font-size:10px;text-align:right}.hero{padding-top:40px}.hero h1{letter-spacing:-1px}.toolbar input{min-width:100%}.toolbar select{flex:1;min-width:0}.grid{grid-template-columns:1fr;gap:14px}.card{padding:20px}.num{font-size:27px}.card .total{font-size:17px;min-height:52px}.card .total strong{font-size:26px}}
+</style>
+</head>
+<body>
+<header class="header"><div class="nav"><div class="brand"><div class="mark" id="secret" title="Admin access">✦</div><span>VIP Number Hub</span></div><small>Premium • Fancy • Numerology</small></div></header>
 
-<div id="login" class="overlay"><div class="modal"><button class="close" onclick="hide('login')">×</button><h2>Admin Login</h2><input id="email" type="email" placeholder="Admin email"><input id="pass" type="password" placeholder="Password"><button class="btn primary" onclick="login()">Login</button></div></div>
-<div id="admin" class="overlay"><div class="modal"><button class="close" onclick="hide('admin')">×</button><h2>Admin Dashboard</h2><p style="color:#aab3c7">Numbers added here are stored in the shared Supabase database.</p>
-<input id="num" maxlength="10" inputmode="numeric" placeholder="10-digit mobile number"><div id="total" class="total">Total = —</div><input id="price" type="number" placeholder="Price ₹"><input id="category" placeholder="Category e.g. VIP"><input id="pattern" placeholder="Pattern / note"><input id="wa" placeholder="WhatsApp number"><button class="btn primary" onclick="addNumber()">Add Number</button><button class="btn" style="width:100%;margin-top:8px;background:#182337;color:#fff" onclick="logout()">Logout</button><div id="adminlist" class="adminlist"></div>
-</div></div><div id="toast" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:white;color:#111;padding:11px 15px;border-radius:12px;font-weight:800;z-index:50"></div>
+<section class="hero">
+  <h1>Find Your <span>Perfect VIP Number</span></h1>
+  <p>Discover premium mobile numbers with attractive patterns, clear pricing and automatic numerology totals.</p>
+</section>
+
+<div class="toolbar">
+  <input id="search" placeholder="Search number, pattern or category" aria-label="Search VIP numbers">
+  <select id="cat" aria-label="Filter by category"><option value="">All categories</option><option>VIP</option><option>Fancy</option><option>Premium</option><option>Numerology</option></select>
+  <select id="sort" aria-label="Sort numbers"><option value="new">Newest</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select>
+</div>
+<main id="grid" class="grid"><div class="empty">Loading VIP numbers…</div></main>
+
+<div id="login" class="overlay">
+  <div class="modal">
+    <button class="close" onclick="hide('login')" aria-label="Close">×</button>
+    <h2>Admin Login</h2>
+    <input id="email" type="email" placeholder="Admin email" autocomplete="username">
+    <input id="pass" type="password" placeholder="Password" autocomplete="current-password">
+    <button class="btn primary" onclick="login()">Login</button>
+  </div>
+</div>
+
+<div id="admin" class="overlay">
+  <div class="modal">
+    <button class="close" onclick="hide('admin')" aria-label="Close">×</button>
+    <h2>Admin Dashboard</h2>
+    <p>Numbers added here are stored in the shared Supabase database.</p>
+    <input id="num" maxlength="10" inputmode="numeric" placeholder="10-digit mobile number">
+    <div id="total" class="admin-total">Numerology Total <strong>—</strong></div>
+    <input id="price" type="number" min="0" placeholder="Price ₹">
+    <input id="category" placeholder="Category e.g. VIP">
+    <input id="pattern" placeholder="Pattern / note">
+    <input id="wa" inputmode="numeric" placeholder="WhatsApp number with country code">
+    <button class="btn primary" onclick="addNumber()">Add Number</button>
+    <button class="btn" style="width:100%;margin-top:8px;background:#edf1f8;color:#26334b" onclick="logout()">Logout</button>
+    <div id="adminlist" class="adminlist"></div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#172033;padding:12px 16px;border:1px solid #e0e6f0;border-radius:12px;font-weight:800;z-index:50;max-width:calc(100% - 32px)"></div>
 
 <script>
 const CONFIG = {
   SUPABASE_URL: "https://tkethohdttyovopxjliq.supabase.co",
   SUPABASE_KEY: "sb_publishable_DHXz-jQEw8DzMOeVc_YruA_pw16iy4m"
 };
-let db=null,items=[],taps=0,timer=null;
-function root(n){let s=[...String(n||"").replace(/\D/g,"")].reduce((a,d)=>a+Number(d),0);while(s>9)s=[...String(s)].reduce((a,d)=>a+Number(d),0);return s||null}
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-function money(v){return "₹"+Number(v||0).toLocaleString("en-IN")}
-function toast(t){let x=document.getElementById("toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",2200)}
-function hide(id){document.getElementById(id).style.display="none"}
-function render(){let q=document.getElementById("search").value.toLowerCase(),c=document.getElementById("cat").value,s=document.getElementById("sort").value;a=items.filter(x=>(!q||[x.number,x.pattern,x.category].join(" ").toLowerCase().includes(q))&&(!c||x.category===c));a.sort((x,y)=>s==="low"?x.price-y.price:s==="high"?y.price-x.price:new Date(y.created_at)-new Date(x.created_at));document.getElementById("grid").innerHTML=a.length?a.map(x=>`<article class="card"><div class="num">${esc(x.number)}</div><div class="price">${money(x.price)}</div><div class="meta"><span>${esc(x.category||"VIP")}</span><span class="total">Total = ${root(x.number)}</span></div>${x.pattern?`<div style="color:#9da9bd;margin-top:10px">${esc(x.pattern)}</div>`:""}<div class="actions">${x.whatsapp?`<button class="btn wa" onclick="wa('${encodeURIComponent(x.whatsapp)}','${encodeURIComponent(x.number)}')">WhatsApp</button>`:""}<button class="btn copy" onclick="copyNum('${esc(x.number)}')">Copy</button></div></article>`).join(""):'<div class="empty">No VIP numbers available yet.<br>Add your first number from the hidden admin dashboard.</div>'}
-async function load(){if(!db)return;let {data,error}=await db.from("vip_numbers").select("*").order("created_at",{ascending:false});if(error){document.getElementById("grid").innerHTML='<div class="empty">Supabase configuration/table is not ready.</div>';return}items=data||[];render();renderAdmin()}
-async function login(){let {error}=await db.auth.signInWithPassword({email:document.getElementById("email").value.trim(),password:document.getElementById("pass").value});if(error)return toast(error.message);hide("login");document.getElementById("admin").style.display="flex";renderAdmin();toast("Login successful")}
-async function logout(){await db.auth.signOut();hide("admin");toast("Logged out")}
-async function addNumber(){let {data:u}=await db.auth.getUser();if(!u.user)return toast("Login again");let n=document.getElementById("num").value.replace(/\D/g,"");if(n.length!==10)return toast("Enter 10 digits");let p=document.getElementById("price").value;if(!p)return toast("Enter price");let row={number:n,price:Number(p),category:document.getElementById("category").value.trim()||"VIP",pattern:document.getElementById("pattern").value.trim(),whatsapp:document.getElementById("wa").value.replace(/\D/g,"")};let {error}=await db.from("vip_numbers").insert(row);if(error)return toast(error.message);["num","price","category","pattern","wa"].forEach(id=>document.getElementById(id).value="");document.getElementById("total").textContent="Total = —";await load();toast("Number added")}
-async function del(id){if(!confirm("Delete this number?"))return;let {error}=await db.from("vip_numbers").delete().eq("id",id);if(error)return toast(error.message);await load();toast("Deleted")}
-function renderAdmin(){document.getElementById("adminlist").innerHTML=items.map(x=>`<div class="row"><span><b>${esc(x.number)}</b><br><small>${money(x.price)} • Total ${root(x.number)}</small></span><button class="btn danger" onclick="del(${x.id})">Delete</button></div>`).join("")}
-function wa(w,n){open("https://wa.me/"+decodeURIComponent(w)+"?text="+encodeURIComponent("Hello, I am interested in VIP number "+decodeURIComponent(n)),"_blank")}
-async function copyNum(n){try{await navigator.clipboard.writeText(n);toast("Number copied")}catch(e){toast("Copy failed")}}
-document.getElementById("num").oninput=e=>document.getElementById("total").textContent="Total = "+(root(e.target.value)||"—");
-["search","cat","sort"].forEach(id=>document.getElementById(id).addEventListener("input",render));
-document.getElementById("secret").onclick=()=>{taps++;clearTimeout(timer);timer=setTimeout(()=>taps=0,1100);if(taps>=5){taps=0;document.getElementById("login").style.display="flex"}};
-(async()=>{if(CONFIG.SUPABASE_URL.startsWith("PASTE_")){document.getElementById("grid").innerHTML='<div class="empty">Demo preview ready.<br>Add your Supabase URL and Publishable Key in CONFIG to connect the live database.</div>';return}db=supabase.createClient(CONFIG.SUPABASE_URL,CONFIG.SUPABASE_KEY);await load()})();
-</script></body></html>
+
+let db = null;
+let items = [];
+let taps = 0;
+let tapTimer = null;
+
+function root(n) {
+  let sum = [...String(n || "").replace(/\D/g, "")].reduce((a, d) => a + Number(d), 0);
+  while (sum > 9) sum = [...String(sum)].reduce((a, d) => a + Number(d), 0);
+  return sum || null;
+}
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+  }[c]));
+}
+
+function money(v) {
+  return "₹" + Number(v || 0).toLocaleString("en-IN");
+}
+
+function toast(message) {
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.style.display = "block";
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(() => el.style.display = "none", 2800);
+}
+
+function hide(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+function render() {
+  const q = document.getElementById("search").value.trim().toLowerCase();
+  const category = document.getElementById("cat").value;
+  const sort = document.getElementById("sort").value;
+
+  const filtered = items.filter(item =>
+    (!q || [item.number, item.pattern, item.category].join(" ").toLowerCase().includes(q)) &&
+    (!category || item.category === category)
+  );
+
+  filtered.sort((a, b) => {
+    if (sort === "low") return Number(a.price) - Number(b.price);
+    if (sort === "high") return Number(b.price) - Number(a.price);
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
+
+  const grid = document.getElementById("grid");
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty">No VIP numbers available yet.<br>Check back soon for new numbers.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(item => {
+    const number = esc(item.number);
+    const whatsAppButton = item.whatsapp
+      ? `<button class="btn wa" onclick="wa('${encodeURIComponent(item.whatsapp)}','${encodeURIComponent(item.number)}')">WhatsApp</button>`
+      : "";
+    return `<article class="card">
+      <div class="num">${number}</div>
+      <div class="price">${money(item.price)}</div>
+      <div class="meta">
+        <span class="category-tag">${esc(item.category || "VIP")}</span>
+        <span class="total">Total <strong>${root(item.number) ?? "—"}</strong></span>
+      </div>
+      ${item.pattern ? `<div class="pattern-note">${esc(item.pattern)}</div>` : ""}
+      <div class="actions">${whatsAppButton}<button class="btn copy" onclick="copyNum('${number}')">Copy Number</button></div>
+    </article>`;
+  }).join("");
+}
+
+async function load() {
+  if (!db) return;
+  const { data, error } = await db.from("vip_numbers").select("*").order("created_at", { ascending: false });
+  if (error) {
+    document.getElementById("grid").innerHTML =
+      '<div class="empty">Could not load numbers. Please check the Supabase connection, table and read permissions.</div>';
+    console.error("Supabase load error:", error);
+    return;
+  }
+  items = data || [];
+  render();
+  renderAdmin();
+}
+
+async function login() {
+  if (!db) return toast("Supabase is not connected. Check the project URL and key.");
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("pass").value;
+  if (!email || !password) return toast("Enter your admin email and password.");
+
+  const { error } = await db.auth.signInWithPassword({ email, password });
+  if (error) {
+    console.error("Admin login error:", error);
+    return toast(error.message);
+  }
+  hide("login");
+  document.getElementById("admin").style.display = "flex";
+  await load();
+  toast("Login successful");
+}
+
+async function logout() {
+  if (db) await db.auth.signOut();
+  hide("admin");
+  toast("Logged out");
+}
+
+async function addNumber() {
+  if (!db) return toast("Supabase is not connected.");
+  const { data: userData, error: authError } = await db.auth.getUser();
+  if (authError || !userData.user) return toast("Please log in again.");
+
+  const number = document.getElementById("num").value.replace(/\D/g, "");
+  if (number.length !== 10) return toast("Enter a valid 10-digit mobile number.");
+
+  const priceText = document.getElementById("price").value;
+  if (priceText === "" || Number(priceText) < 0) return toast("Enter a valid price.");
+
+  const row = {
+    number,
+    price: Number(priceText),
+    category: document.getElementById("category").value.trim() || "VIP",
+    pattern: document.getElementById("pattern").value.trim(),
+    whatsapp: document.getElementById("wa").value.replace(/\D/g, "")
+  };
+
+  const { error } = await db.from("vip_numbers").insert(row);
+  if (error) {
+    console.error("Add number error:", error);
+    return toast(error.message);
+  }
+
+  ["num", "price", "category", "pattern", "wa"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+  updateAdminTotal("");
+  await load();
+  toast("Number added successfully");
+}
+
+async function del(id) {
+  if (!confirm("Delete this number?")) return;
+  const { error } = await db.from("vip_numbers").delete().eq("id", id);
+  if (error) {
+    console.error("Delete number error:", error);
+    return toast(error.message);
+  }
+  await load();
+  toast("Number deleted");
+}
+
+function renderAdmin() {
+  const adminList = document.getElementById("adminlist");
+  adminList.innerHTML = items.map(item => `
+    <div class="row">
+      <span><b>${esc(item.number)}</b><br><small>${money(item.price)} • Total ${root(item.number) ?? "—"}</small></span>
+      <button class="btn danger" onclick="del(${Number(item.id)})">Delete</button>
+    </div>
+  `).join("");
+}
+
+function updateAdminTotal(value) {
+  const total = root(value);
+  document.getElementById("total").innerHTML = `Numerology Total <strong>${total ?? "—"}</strong>`;
+}
+
+function wa(encodedWhatsApp, encodedNumber) {
+  const phone = decodeURIComponent(encodedWhatsApp).replace(/\D/g, "");
+  if (!phone) return toast("WhatsApp number is missing.");
+  const number = decodeURIComponent(encodedNumber);
+  window.open(
+    "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hello, I am interested in VIP number " + number),
+    "_blank",
+    "noopener,noreferrer"
+  );
+}
+
+async function copyNum(number) {
+  try {
+    await navigator.clipboard.writeText(number);
+    toast("Number copied");
+  } catch (error) {
+    toast("Copy failed. Please copy the number manually.");
+  }
+}
+
+document.getElementById("num").addEventListener("input", event => updateAdminTotal(event.target.value));
+["search", "cat", "sort"].forEach(id => {
+  document.getElementById(id).addEventListener("input", render);
+  document.getElementById(id).addEventListener("change", render);
+});
+
+document.getElementById("secret").addEventListener("click", () => {
+  taps++;
+  clearTimeout(tapTimer);
+  tapTimer = setTimeout(() => taps = 0, 1100);
+  if (taps >= 5) {
+    taps = 0;
+    document.getElementById("login").style.display = "flex";
+  }
+});
+
+(async function init() {
+  if (!window.supabase) {
+    document.getElementById("grid").innerHTML =
+      '<div class="empty">The Supabase library did not load. Refresh the page and try again.</div>';
+    return;
+  }
+  db = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY);
+  await load();
+})();
+</script>
+</body>
+</html>
+
