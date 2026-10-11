@@ -58,6 +58,8 @@ button,input,select{font:inherit}
 #toast{box-shadow:0 8px 28px #15213a20}
 .admin-total{display:inline-flex;align-items:center;gap:10px;background:#fff3cb;border:1px solid #e5c66d;border-radius:14px;padding:12px 15px;color:#765300;font-weight:850;margin:6px 0 8px}
 .admin-total strong{font-size:27px;color:#765000}
+.site-footer{max-width:1180px;margin:0 auto;padding:22px 18px 28px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px;line-height:1.8}
+.site-footer strong{color:#8a650c;letter-spacing:.5px}
 @media(max-width:600px){.nav{padding:12px 14px}.nav small{font-size:10px;text-align:right}.hero{padding-top:40px}.hero h1{letter-spacing:-1px}.toolbar input{min-width:100%}.toolbar select{flex:1;min-width:0}.grid{grid-template-columns:1fr;gap:14px}.card{padding:20px}.num{font-size:27px}.card .total{font-size:17px;min-height:52px}.card .total strong{font-size:26px}}
 </style>
 </head>
@@ -102,6 +104,8 @@ button,input,select{font:inherit}
     <div id="adminlist" class="adminlist"></div>
   </div>
 </div>
+
+<footer class="site-footer">© 2026 VIP Number Hub <span aria-hidden="true">•</span> All Rights Reserved<br>Developed by <strong>JAGDISH TAYADE</strong></footer>
 
 <div id="toast" role="status" aria-live="polite" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#172033;padding:12px 16px;border:1px solid #e0e6f0;border-radius:12px;font-weight:800;z-index:50;max-width:calc(100% - 32px)"></div>
 
@@ -328,4 +332,5 @@ document.getElementById("secret").addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
